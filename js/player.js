@@ -1,6 +1,6 @@
 class Player{ 
 
-constructor(ctx, gameWith, gameHeight, radius){ 
+constructor(ctx, gameWith, gameHeight){ 
 
     this.ctx = ctx
     this.gameSize = {w: gameWith, h: gameHeight}

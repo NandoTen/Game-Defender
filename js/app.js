@@ -11,6 +11,9 @@ const gameDefender = {
     asteroid: [],
     numberAsteroid: 20,
     indexFrame: 0,
+    mouseX: 0,
+    mouseY: 0,
+    laser: undefined,
 
 
 
@@ -20,6 +23,7 @@ const gameDefender = {
         this.canvasNode = document.querySelector(`#${canvasID}`)
         this.ctx = this.canvasNode.getContext('2d')
         this.setDimensions()
+        this.setEventListeners()
         this.start()
 
     },
@@ -49,6 +53,16 @@ const gameDefender = {
 
       this.asteroidSpeed()  
 
+    },
+    
+
+    createLaser() {
+
+
+            this.laser = new Laser(this.ctx, this.gameSize.w, this.gameSize.h, this.mouseX ,this.mouseY)
+            //console.log('laser',this.laser)
+
+
      },
 
     asteroidSpeed() { 
@@ -72,6 +86,7 @@ const gameDefender = {
         
 
         this.createPlayer()
+        this.createLaser()
         
 
         console.log(this.asteroid)
@@ -93,15 +108,17 @@ const gameDefender = {
             
     
     drawAll() {  this.player.draw()
-        this.asteroid.forEach(eachAsteroid=>{ 
+        this.asteroid.forEach(eachAsteroid => { 
 
             eachAsteroid.draw()
             eachAsteroid.move()
         })
-        
+        this.laser.draw()
     },
 
     colisionPlayer() { 
+
+        
 
         this.asteroid.forEach(eachAsteroid => { 
 
@@ -128,16 +145,19 @@ const gameDefender = {
         })
 
 
+    },
+
+    setEventListeners() {
+
+
+        window.addEventListener('click', (event) => {
+            this.mouseX = event.clientX
+            this.mouseYT = event.clientY 
+})
 
 
 
-
-
-
-
-
-
-    }
+     }
 
 
 
