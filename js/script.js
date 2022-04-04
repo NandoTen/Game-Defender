@@ -1,0 +1,1 @@
+gameDefender.init('canvasGame')
