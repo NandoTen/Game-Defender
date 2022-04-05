@@ -1,37 +1,48 @@
-class Player{ 
+class Player {
 
-constructor(ctx, gameWith, gameHeight){ 
+    constructor(ctx, gameWith, gameHeight) {
 
-    this.ctx = ctx
-    this.gameSize = {w: gameWith, h: gameHeight}
-    this.playerSize = {w: 40, h: 40}
-}
+        this.ctx = ctx
+        this.gameSize = { w: gameWith, h: gameHeight }
+        this.playerSize = { w: 40, h: 40 }
+        this.setEventListeners()
+        this.laser = []
+        
+    }
 
-
-
-
-
-
-    draw() { 
+//this.laser.collition
+    draw() {
         
         this.ctx.fillStyle = 'black'
     
         this.ctx.fillRect(this.gameSize.w / 2 - this.playerSize.w / 2, this.gameSize.h / 2 - this.playerSize.h / 2, this.playerSize.w, this.playerSize.h)
         
-      
-    //     this.ctx.lineWidth = 10
-    //     this.ctx.strokeStyle = 'white'
-
-    //     this.ctx.beginPath()
-    //     this.ctx.arc(this.gameSize.w / 2 , this.gameSize.h/ 2 , this.playerSize, 0, Math.PI * 2)
-    //     this.ctx.fill()
-    //     this.ctx.stroke()
-    //     this.ctx.closePath()
+        this.laser.forEach(eachLaser => eachLaser.draw())
+        //console.log(this.laser)
+     
 
     }
 
+    setEventListeners() {
 
+        window.addEventListener('click', event => {
+            this.mouseX = event.clientX
+            this.mouseY = event.clientY
+            this.createLaser()
 
+            //console.log('click')
+            
+        })
 
+    }
 
+        createLaser() {
+           
+        this.laser.push(new Laser(this.ctx, this.gameSize.w, this.gameSize.h, this.mouseX, this.mouseY))
+        //this.laser.draw()
+            //console.log('laser',this.laser)
+
+        }
+    
+       
 }

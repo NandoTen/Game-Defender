@@ -1,47 +1,57 @@
 class Laser { 
 
-    constructor(ctx, gameWith, gameHeight, posX, posY, radius, velocity) { 
+    constructor(ctx, gameWith, gameHeight, mouseX, mouseY) { 
 
         this.ctx = ctx
-        this.laserPos = { x: posX, y: posY }
-        this.radius = radius
-        this.velocity = velocity
-        this.gameSize = {w: gameWith, h:gameHeight}
+        this.mousePos = { x: mouseX, y: mouseY }
+        this.gameSize = { w: gameWith, h: gameHeight }
+        this.laserPos = { x: gameWith / 2, y: gameHeight / 2 }
+        this.blastSize = 4
+        this.blastCollition = 0
+        this.deleteMe = false
         
+           
     }
 
 
     draw() {
 
-        
+        //this.ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
         this.ctx.fillStyle = 'red'
         this.ctx.beginPath()
-        this.ctx.arc(this.gameSize.w / 2 , this.gameSize.h/ 2 , 4, 0, Math.PI * 2)
+        this.ctx.arc(this.laserPos.x , this.laserPos.y , this.blastSize, 0, Math.PI * 2)
         this.ctx.fill()
         this.ctx.closePath()
 
+        //console.log('draw laser ')
+        this.move()
     }
     
     move() { 
-
-        const angle = Math.atan2(mouseY - this.gameSize.h / 2, mousex - this.gameSize.w / 2)
+            
+        const angle = Math.atan2(this.mousePos.y - this.laserPos.y, this.mousePos.x - this.laserPos.x)
         
-        const velocity = {
+   console.log(this.blastCollition)
 
-            x: Math.cos(angle),
-            y: Math.sin(angle)
+        if (this.blastCollition === 0) {
 
-        }
+            this.laserPos.x += Math.cos(angle) * 5
+            this.laserPos.y += Math.sin(angle) * 5
+            
+            if (Math.abs(this.mousePos.x - this.laserPos.x) < 5 && this.blastSize <= 30) {
+                this.blastSize += 2
+            
+            }
+        } else {
 
+            if (this.blastSize <= 30) {this.blastSize += 2 }
+               
 
-
-        this.posX += this.velocity.x
-        this.posY += this.velocity.y
-
-
-        this.ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI*2, false)
-
-
+         }
+        
+        if (this.blastSize > 30) {this.deleteMe = true }
+        
+        
     }
 
 
