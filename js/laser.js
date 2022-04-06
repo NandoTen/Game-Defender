@@ -31,7 +31,7 @@ class Laser {
             
         const angle = Math.atan2(this.mousePos.y - this.laserPos.y, this.mousePos.x - this.laserPos.x)
         
-   console.log(this.blastCollition)
+   //console.log(this.blastCollition)
 
         if (this.blastCollition === 0) {
 

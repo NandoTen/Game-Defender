@@ -1,2 +1,58 @@
-#canvas{margin: 0;
+*{margin: 0;
 padding: 0;}
+
+#canvas{margin: 0;
+padding: 0;
+margin: 0;
+position: absolute;
+z-index: 1;
+outline: none;
+border: none;}
+
+.controls{
+    
+    background-color: black;
+    bottom: 0px;
+    height: 50px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+
+}
+
+.lifes{
+
+padding: 0 20px;
+    display: flex;
+    
+}
+
+.life{
+
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background-color: rgb(241, 165, 14);
+margin: 0 20px;
+
+}
+
+.start{
+
+height: 40px;
+color: white;
+background-color: rgb(7, 6, 96);
+border-radius: 2px;
+padding: 0 10px;
+border:1px solid white;
+width: 100px;
+margin-right: 100px;
+
+
+}
