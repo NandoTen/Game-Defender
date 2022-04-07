@@ -9,8 +9,9 @@ class Laser {
         this.blastSize = 4
         this.blastCollition = 0
         this.deleteMe = false
+        //this.soundBlast = new Audio(' ')
         
-           
+         
     }
 
 
@@ -31,7 +32,7 @@ class Laser {
             
         const angle = Math.atan2(this.mousePos.y - this.laserPos.y, this.mousePos.x - this.laserPos.x)
         
-   //console.log(this.blastCollition)
+   
 
         if (this.blastCollition === 0) {
 
@@ -40,6 +41,7 @@ class Laser {
             
             if (Math.abs(this.mousePos.x - this.laserPos.x) < 5 && this.blastSize <= 30) {
                 this.blastSize += 2
+                
             
             }
         } else {
@@ -49,7 +51,10 @@ class Laser {
 
          }
         
-        if (this.blastSize > 30) {this.deleteMe = true }
+        if (this.blastSize > 30) {
+            this.deleteMe = true
+            //this.soundBlast.play()
+        }
         
         
     }
