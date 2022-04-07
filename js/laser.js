@@ -9,7 +9,7 @@ class Laser {
         this.blastSize = 4
         this.blastCollition = 0
         this.deleteMe = false
-        //this.soundBlast = new Audio(' ')
+        this.blastSound = new Audio('./sound/blast.mp3')
         
          
     }
@@ -53,7 +53,8 @@ class Laser {
         
         if (this.blastSize > 30) {
             this.deleteMe = true
-            //this.soundBlast.play()
+            this.blastSound.play()
+            this.blastSound.volume = 1
         }
         
         

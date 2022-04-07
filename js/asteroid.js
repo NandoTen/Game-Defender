@@ -65,7 +65,7 @@ class Asteroid {
 
     draw(framesCounter) { 
 
-        console.log('framesCounter',framesCounter)
+        //console.log('framesCounter',framesCounter)
       
         this.ctx.drawImage(
             this.imageAsteroid1,

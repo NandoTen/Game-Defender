@@ -8,7 +8,8 @@ html {
 body{
 
 /*background-image: url("../images/Space_Planets_Wallpaper.jpg");*/
-background-image: url("../images/abstract-watercolor-space-background-1-2581694.jpg");
+/*background-image: url("../images/abstract-watercolor-space-background-1-2581694.jpg");*/
+background-image: url('../images/intro.jpg');
 background-repeat: no-repeat;
 background-size: cover;
 width: 100%;

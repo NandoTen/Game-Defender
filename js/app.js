@@ -22,6 +22,10 @@ const gameDefender = {
     framesCounter: 0,
     introSound: new Audio('./sound/intro.mp3'),
     startButton: undefined,
+    imageBackground: undefined,
+    blastSound: new Audio('./sound/blast.mp3'),
+    
+
 
     
   
@@ -85,7 +89,7 @@ const gameDefender = {
  
     start() {
         this.introSound.play()
-        this.introSound.volume = 1
+        this.introSound.volume = 0.2
         this.createPlayer()
         this.createAsteroid()
 
@@ -108,6 +112,8 @@ const gameDefender = {
     clearAll() { this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h) },
             
     drawAll() {
+
+        this.imageBackground
         this.player.draw()
         this.asteroid.forEach(eachAsteroid => {
 
@@ -292,10 +298,15 @@ const gameDefender = {
         this.ctx.fillStyle = 'White'
         this.ctx.font = "Bold 60px Arial";
         this.ctx.fillText("GAME OVER", this.gameSize.w / 2, this.gameSize.h / 2);
+        this.ctx.font = "Bold 15px Arial";
+        this.ctx.fillText("PRESS SPACEBAR TO CONTINUE", this.gameSize.w / 2, this.gameSize.h / 2 + 50);
         this.setEventListernet() 
+        this.numberAsteroid = 10
+        this.asteroid = []
+
         
        
-        console.log('GO checekLife',this.checkLife)
+        //console.log('GO checekLife',this.checkLife)
 
     },
     
@@ -338,16 +349,19 @@ const gameDefender = {
 
         
         
-        this.ctx.textAlign = 'center';
-        this.ctx.fillStyle = 'White'
-        this.ctx.font = "Bold 95px Arial";
-        this.ctx.fillText("SPACE ", this.gameSize.w / 2, this.gameSize.h / 2);
-        this.ctx.font = "Bold 60px Arial";
-        this.ctx.fillText("DEFENDER", this.gameSize.w / 2, this.gameSize.h / 2 + 50);
+        // this.ctx.textAlign = 'center';
+        // this.ctx.fillStyle = 'White'
+        // this.ctx.font = "Bold 95px Arial";
+        // this.ctx.fillText("SPACE ", this.gameSize.w / 2, this.gameSize.h / 2);
+        // this.ctx.font = "Bold 60px Arial";
+        // this.ctx.fillText("DEFENDER", this.gameSize.w / 2, this.gameSize.h / 2 + 50);
+
+        this.imageBackground = document.querySelector('body')
 
         this.startButton.addEventListener('click', () => {
             setTimeout(() => {
                 this.startButton.classList.add('hidden')
+                this.imageBackground.style.backgroundImage = "url('./images/background.jpg')";
                 this.start()
             }, 1000);
         })
