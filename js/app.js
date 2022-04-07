@@ -20,17 +20,26 @@ const gameDefender = {
     level: 1,
     checkLife: true,
     framesCounter: 0,
+    introSound: new Audio('./sound/intro.mp3'),
+    startButton: undefined,
+
+    
   
     // this.player.collition
 
     init(canvasID) {
-  
+        this.startButton = document.querySelector('.start'),
         this.canvasNode = document.querySelector(`#${canvasID}`)
         this.buttonStart = document.querySelector(`.start`)
         this.ctx = this.canvasNode.getContext('2d')
         this.setDimensions()
         this.intro()
-        setTimeout(() => { this.start() }, 3000);
+        
+      
+
+
+
+        
 
     },
 
@@ -75,7 +84,8 @@ const gameDefender = {
 
  
     start() {
-        console.log('Start', this.checkLife)
+        this.introSound.play()
+        this.introSound.volume = 1
         this.createPlayer()
         this.createAsteroid()
 
@@ -325,12 +335,28 @@ const gameDefender = {
     intro() {
 
         this.clearAll()
+
+        
+        
         this.ctx.textAlign = 'center';
         this.ctx.fillStyle = 'White'
         this.ctx.font = "Bold 95px Arial";
         this.ctx.fillText("SPACE ", this.gameSize.w / 2, this.gameSize.h / 2);
         this.ctx.font = "Bold 60px Arial";
         this.ctx.fillText("DEFENDER", this.gameSize.w / 2, this.gameSize.h / 2 + 50);
+
+        this.startButton.addEventListener('click', () => {
+            setTimeout(() => {
+                this.startButton.classList.add('hidden')
+                this.start()
+            }, 1000);
+        })
+        
+
+
+        
+
+        
 
 
 

@@ -59,7 +59,7 @@ class Player {
             this.createLaser()
             this.audioLaser.play();
             this.audioLaser.loop = false
-            this.audioLaser.volume = 2
+            this.audioLaser.volume = 1
 
             //console.log('click')
             
