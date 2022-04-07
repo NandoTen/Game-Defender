@@ -10,7 +10,7 @@ const gameDefender = {
     gameSize: { w: undefined, h: undefined },
     player: undefined,
     asteroid: [],
-    numberAsteroid: 1,
+    numberAsteroid: 10,
     indexFrame: 0,
     mouseX: 0,
     mouseY: 0,
@@ -19,6 +19,7 @@ const gameDefender = {
     timeoutID: 0,
     level: 1,
     checkLife: true,
+    framesCounter: 0,
   
     // this.player.collition
 
@@ -33,6 +34,15 @@ const gameDefender = {
 
     },
 
+    background() {
+
+        const imageInstance = new Image()
+        imageInstance.src = `images/${night-stars.jpg}`
+        imageInstance.onload = () => this.ctx.drawImage(imageInstance, 0, 0, this.gameSize.w, this.gameSize.h)
+
+
+     },
+
     setDimensions() {
         this.gameSize = {
             w: window.innerWidth,
@@ -40,7 +50,8 @@ const gameDefender = {
         }
         this.canvasNode.setAttribute('width', this.gameSize.w)
         this.canvasNode.setAttribute('height', this.gameSize.h)
-        this.canvasNode.style.backgroundColor = 'Gray'
+        //this.canvasNode.style.backgroundColor = 'Gray'
+        
     },
       
     createPlayer() {
@@ -69,10 +80,13 @@ const gameDefender = {
         this.createAsteroid()
 
         this.intervalID = setInterval(() => {
+
+            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
             
             this.clearAll()
             this.drawAll()
-            this.collitionsLaser()
+            //this.collitionsLaser()
+            this.collitionsLaser2()
             this.colisionPlayer()
             
             this.deleteLaser()    
@@ -87,7 +101,7 @@ const gameDefender = {
         this.player.draw()
         this.asteroid.forEach(eachAsteroid => {
 
-            eachAsteroid.draw()
+            eachAsteroid.draw((this.framesCounter))
             eachAsteroid.move()
         })
         
@@ -166,6 +180,59 @@ const gameDefender = {
         })
             
     }
+    },
+    
+     collitionsLaser2() {
+
+    
+        if (this.asteroid.length === 0 && this.checkLife) {
+
+            clearInterval(this.intervalID)
+           
+            this.nextLevel()
+        } else { 
+            
+            this.player.laser.forEach((eachLaser, indexLaser) => {
+            
+                if (eachLaser.blastSize <= 9) { 
+
+                this.asteroid.forEach((eachAsteroid, indexAsteroid) => {
+
+
+                    if (eachLaser.laserPos.x < (eachAsteroid.asteroidPos.x - eachAsteroid.asteroidWith / 2) + eachAsteroid.asteroidWith &&
+                        eachLaser.laserPos.x + eachLaser.blastSize * 2 > eachAsteroid.asteroidPos.x - eachAsteroid.asteroidWith / 2 &&
+                        eachLaser.laserPos.y < (eachAsteroid.asteroidPos.y - eachAsteroid.asteroidWith / 2) + eachAsteroid.asteroidWith &&
+                        eachLaser.blastSize * 2 + eachLaser.laserPos.y > (eachAsteroid.asteroidPos.y - eachAsteroid.asteroidWith / 2)) {
+ 
+                        eachLaser.blastCollition = 1
+                    
+                        if (eachAsteroid.asteroidLife === 3) {
+                        
+                            //console.log('asteroid = ',eachAsteroid.asteroidWith)
+                        
+                            eachAsteroid.asteroidWith = 30
+                            eachAsteroid.asteroidLife--
+
+
+                        } else if (eachAsteroid.asteroidWith === 30 && eachAsteroid.asteroidLife === 2) {
+                            eachAsteroid.asteroidLife--
+                        }
+                        else if (eachAsteroid.asteroidWith === 30 && eachAsteroid.asteroidLife === 1) {
+                            this.asteroid.splice(indexAsteroid, 1)
+                        }
+    
+    
+                    
+
+
+                    }
+
+                })
+            }
+
+        })
+            
+    }
 },
             
             //     if (rect1.x < rect2.x + rect2.width &&
@@ -196,7 +263,7 @@ const gameDefender = {
         
             
             this.ctx.textAlign = 'center';
-            this.ctx.fillStyle = 'Black'
+            this.ctx.fillStyle = 'White'
             this.ctx.font = "Bold 60px Arial";
             this.ctx.fillText(`${this.lifes} LIFE REMAIN`, this.gameSize.w / 2, this.gameSize.h / 2);
             this.ctx.fillStyle = 'White'
@@ -212,7 +279,7 @@ const gameDefender = {
     gameOver() {
         this.clearAll()
         this.ctx.textAlign = 'center';
-        this.ctx.fillStyle = 'Black'
+        this.ctx.fillStyle = 'White'
         this.ctx.font = "Bold 60px Arial";
         this.ctx.fillText("GAME OVER", this.gameSize.w / 2, this.gameSize.h / 2);
         this.setEventListernet() 
@@ -229,10 +296,10 @@ const gameDefender = {
         this.level ++
         this.clearAll()
         this.ctx.textAlign = 'center';
-        this.ctx.fillStyle = 'Black'
+        this.ctx.fillStyle = 'White'
         this.ctx.font = "Bold 60px Arial";
         this.ctx.fillText(`NEXT LEVEL ${this.level}`, this.gameSize.w / 2, this.gameSize.h / 2);
-        this.numberAsteroid += 2
+        this.numberAsteroid += 10
         setTimeout(() => { this.start() }, 3000);
       
 
@@ -259,7 +326,7 @@ const gameDefender = {
 
         this.clearAll()
         this.ctx.textAlign = 'center';
-        this.ctx.fillStyle = 'Black'
+        this.ctx.fillStyle = 'White'
         this.ctx.font = "Bold 95px Arial";
         this.ctx.fillText("SPACE ", this.gameSize.w / 2, this.gameSize.h / 2);
         this.ctx.font = "Bold 60px Arial";

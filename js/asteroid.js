@@ -10,6 +10,13 @@ class Asteroid {
         this.initialPos = { x: 0, y: 0 }
         this.vector = 1
         this.speed = 1
+        this.asteroidLife = 3
+        this.imageAsteroid1 = new Image();
+        this.imageAsteroid1.src = `./images/asteroid-sptite.png`
+        this.imageAsteroid1.frames = 4;
+        this.imageAsteroid1.framesIndex = 0;
+        //this.imageAsteroid2 = new Image();
+        //this.imageAsteroid12src = `../images/asteroid4.png`
         this.init() 
         
         
@@ -23,13 +30,20 @@ class Asteroid {
         this.size()
         this.randomPosition()
         this.vectorTrack()
+        
 
     }
 
 
     size() {
         this.asteroidWith = Math.floor(Math.random() * 10) // 0 and 1  
-        if (this.asteroidWith < 5) { this.asteroidWith = 15 } else { this.asteroidWith = 25 } // calcula tamaño asteroide
+        if (this.asteroidWith < 5) {
+            this.asteroidWith = 30
+            this.asteroidLife = 1
+        } else {
+            this.asteroidWith = 50
+            this.asteroidLife = 3
+        } // calcula tamaño asteroide
     }
 
     randomPosition() {
@@ -49,34 +63,41 @@ class Asteroid {
     vectorTrack() {  if (this.initialPos.x > this.gameSize.w / 2) { this.vector = -1 }}
     
 
-    draw() { 
-        
-        this.ctx.fillStyle = 'white'
-        //this.ctx.fillRect(this.initialPos.x - this.asteroidWith / 2, this.initialPos.y - this.asteroidWith / 2, this.asteroidWith, this.asteroidWith)
-        this.ctx.fillRect(this.asteroidPos.x-this.asteroidWith/2 , this.asteroidPos.y-this.asteroidWith/2 , this.asteroidWith, this.asteroidWith)
-        // this.ctx.lineWidth = 0
-        // this.ctx.strokeStyle = 'white'
-        // this.ctx.beginPath()
-        // this.ctx.arc(this.asteroidPos.x , this.asteroidPos.y , this.asteroidWith, 0, Math.PI * 2)
-        // this.ctx.fill()
-        // this.ctx.stroke()
-        // this.ctx.closePath()
+    draw(framesCounter) { 
 
-}
+        console.log('framesCounter',framesCounter)
+      
+        this.ctx.drawImage(
+            this.imageAsteroid1,
+            this.imageAsteroid1.framesIndex * (this.imageAsteroid1.width / this.imageAsteroid1.frames),
+            0,
+           this.imageAsteroid1.width / this.imageAsteroid1.frames,
+           this.imageAsteroid1.height,
+            
+            this.asteroidPos.x - this.asteroidWith / 2,
+            this.asteroidPos.y - this.asteroidWith / 2,
+            this.asteroidWith,
+            this.asteroidWith)
+        
+        this.animate(framesCounter)
+
+       // this.ctx.drawImage(this.imageAsteroid1,this.asteroidPos.x - this.asteroidWith / 2, this.asteroidPos.y - this.asteroidWith / 2, this.asteroidWith, this.asteroidWith)
+
+        
+    }
+    
+    animate(framesCounter) {
+    if (framesCounter % 4 == 0) {
+      this.imageAsteroid1.framesIndex++;
+    }
+    if (this.imageAsteroid1.framesIndex >= this.imageAsteroid1.frames) {
+      this.imageAsteroid1.framesIndex = 0;
+    }
+  }
     
     move() { 
 
-        // if (this.initialPos.x > this.gameSize.w/2 && this.initialPos.y > this.gameSize.h/2) { this.asteroidPos.x -= 10 }
-        // else { this.asteroidPos.x += 10 }
-
-        //console.log('move', this.initialPos)
-        
-
-       
-        
-      
-        
-        //console.log('move', this.initialPos)
+    
 
         this.asteroidPos.x += (this.vector*500/(this.gameSize.w/2))*this.speed
 
